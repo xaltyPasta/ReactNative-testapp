@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Grid, Row, Col } from 'react-native-easy-grid'; // Import Grid, Row, and Col
 
 type Props = {
     navigation: NativeStackNavigationProp<any>;
@@ -64,29 +65,28 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
 
             {/* Bottom Navigation Tabs */}
-            <View style={styles.bottomTabs}>
-                <TouchableOpacity
-                    style={[styles.bottomTabButton, activeTab === 'pending' && styles.activeBottomTab]}
-                    onPress={() => navigation.navigate('Home')}
-                >
-                    <MaterialIcons name="home" size={24} color={activeTab === 'pending' ? '#32a852' : '#555'} />
-                    <Text style={[styles.bottomTabText, activeTab === 'pending' && styles.activeBottomTabText]}>Home</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.bottomTabButton, activeTab === 'approved' && styles.activeBottomTab]}
-                    onPress={() => navigation.navigate('Invoices')}
-                >
-                    <MaterialIcons name="file-invoice" size={24} color={activeTab === 'approved' ? '#32a852' : '#555'} />
-                    <Text style={[styles.bottomTabText, activeTab === 'approved' && styles.activeBottomTabText]}>My Invoices</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.bottomTabButton, activeTab === 'approved' && styles.activeBottomTab]}
-                    onPress={() => navigation.navigate('Reimbursements')}
-                >
-                    <MaterialIcons name="redo" size={24} color={activeTab === 'approved' ? '#32a852' : '#555'} />
-                    <Text style={[styles.bottomTabText, activeTab === 'approved' && styles.activeBottomTabText]}>Reimbursements</Text>
-                </TouchableOpacity>
-            </View>
+            <Grid style={styles.bottomTabs}>
+                <Row>
+                    <Col style={styles.bottomTabButton}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.tabContent}>
+                            <MaterialIcons name="home" size={24} color="#32a852" />
+                            <Text style={styles.bottomTabText}>Home</Text>
+                        </TouchableOpacity>
+                    </Col>
+                    <Col style={styles.bottomTabButton}>
+                        <TouchableOpacity onPress={() => navigation.navigate('BillLists')} style={styles.tabContent}>
+                            <MaterialIcons name="article" size={24} color="#32a852" />
+                            <Text style={styles.bottomTabText}>My Invoices</Text>
+                        </TouchableOpacity>
+                    </Col>
+                    <Col style={styles.bottomTabButton}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ReimbursementScreen')} style={styles.tabContent}>
+                            <MaterialIcons name="redo" size={24} color="#32a852" />
+                            <Text style={styles.bottomTabText}>Reimbursements</Text>
+                        </TouchableOpacity>
+                    </Col>
+                </Row>
+            </Grid>
         </View>
     );
 };
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
         right: 20,
-        bottom: 100,
+        bottom: 80, // Adjust this value to bring it up from the bottom
         backgroundColor: '#32A852',
         width: 60,
         height: 60,
@@ -177,30 +177,26 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     bottomTabs: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 10,
         borderTopWidth: 1,
         borderTopColor: '#ddd',
+        padding: 10,
+        backgroundColor: '#fff',
         position: 'absolute',
         bottom: 0,
-        width:'110%',
-        backgroundColor: '#fff',
+        left: 0,
+        right: 0,
     },
     bottomTabButton: {
         alignItems: 'center',
+        justifyContent: 'center',
         paddingVertical: 8,
     },
-    activeBottomTab: {
-        borderBottomWidth: 2,
-        borderBottomColor: '#32A852',
+    tabContent: {
+        alignItems: 'center', // Centering the icon and text
+        justifyContent: 'center', // Centering the icon and text
     },
     bottomTabText: {
         fontSize: 12,
         color: '#555',
-    },
-    activeBottomTabText: {
-        color: '#32A852',
-        fontWeight: 'bold',
     },
 });

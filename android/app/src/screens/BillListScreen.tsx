@@ -15,10 +15,10 @@ export const BillListScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             {/* Header Section */}
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <MaterialIcons name="person" size={40} color="#555" />
                 <Text style={styles.greeting}>Hello, User</Text>
-            </View>
+            </View> */}
 
             {/* Bill List */}
             <FlatList
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 20,
         bottom: 30,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#32a852',
         width: 56,
         height: 56,
         borderRadius: 28,

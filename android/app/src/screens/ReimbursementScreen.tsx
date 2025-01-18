@@ -12,10 +12,10 @@ export const ReimbursementScreen: React.FC = () => {
     return (
         <View style={styles.container}>
             {/* Header Section */}
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <MaterialIcons name="assignment" size={30} color="#007AFF" />
                 <Text style={styles.headerText}>Reimbursement</Text>
-            </View>
+            </View> */}
 
             {/* List of Approved Bills */}
             <FlatList
