@@ -96,6 +96,7 @@ export const CameraScreen: React.FC<Props> = ({ navigation }) => {
                         keyboardType="numeric"
                         value={amount}
                         onChangeText={setAmount}
+                        placeholderTextColor="#000"
                     />
                     <TouchableOpacity
                         style={styles.input}
@@ -104,18 +105,21 @@ export const CameraScreen: React.FC<Props> = ({ navigation }) => {
                         <Text style={transactionDate ? styles.dateText : styles.placeholderText}>
                             {transactionDate || 'Select Transaction Date'}
                         </Text>
+
                     </TouchableOpacity>
                     <TextInput
                         style={styles.input}
                         placeholder="Description"
                         value={description}
                         onChangeText={setDescription}
+                        placeholderTextColor="#000"
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Invoice # (Optional)"
                         value={invoiceNumber}
                         onChangeText={setInvoiceNumber}
+                        placeholderTextColor="#000"
                     />
                 </View>
 
@@ -141,13 +145,13 @@ const styles = StyleSheet.create({
     },
     preview: {
         width: '100%',
-        height: 300,
+        height: 200,
         borderRadius: 8,
         marginBottom: 16,
     },
     uploadContainer: {
         width: '100%',
-        height: 300,
+        height: 200,
         backgroundColor: '#f5f5f5',
         borderRadius: 8,
         alignItems: 'center',
@@ -161,10 +165,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     uploadIcon: {
-        marginRight: 8,
+        marginRight: 12,
     },
     uploadText: {
-        fontSize: 16,
+        fontSize: 22,
         color: '#32a852',
     },
     form: {
@@ -179,12 +183,15 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     buttons: {
-        gap: 16,
+        gap: 20,
     },
     placeholderText: {
-        color: '#32a852',
+        color: '#000', // Change to black
     },
     dateText: {
-        color: '#000',
+        fontSize: 16,
+        color: '#32a852',
     },
 });
+
+

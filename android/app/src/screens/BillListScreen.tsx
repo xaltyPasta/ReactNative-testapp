@@ -28,7 +28,7 @@ export const BillListScreen: React.FC<Props> = ({ navigation }) => {
                     <View style={styles.billItem}>
                         <MaterialIcons name="receipt" size={50} color="#007AFF" />
                         <View style={styles.billInfo}>
-                            <Text style={styles.amount}>${item.amount}</Text>
+                            <Text style={styles.amount}>₹{item.amount}</Text>
                             <Text style={styles.date}>
                                 {new Date(item.date).toLocaleDateString()}
                             </Text>
