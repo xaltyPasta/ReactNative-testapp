@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Grid, Row, Col } from 'react-native-easy-grid'; // Import Grid, Row, and Col
 
 type Props = {
     navigation: NativeStackNavigationProp<any>;
 };
 
+const { height } = Dimensions.get('window');
+const headerHeight = height * 0.2; // 20% of screen height
+
 export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const [activeTab, setActiveTab] = useState<'pending' | 'approved'>('pending');
+    const [showUsername, setShowUsername] = useState<boolean>(true);
 
     const bills = useSelector((state: RootState) => state.bills.bills);
     const filteredBills = bills.filter(bill => bill.status === activeTab);
 
     return (
         <View style={styles.container}>
-            {/* Header Section */}
-            <View style={styles.header}>
-                <MaterialIcons name="account-circle" size={40} color="#32a852" />
-                <Text style={styles.headerText}>Hello, User</Text>
+            {/* Header Section with User Icon and Username */}
+            <View style={[styles.header, { height: headerHeight }]}>
+                {/* Left Half: User Icon and Username with Dropdown Arrow */}
+                <View style={styles.userContainer}>
+                    <MaterialIcons name="account-circle" size={90} color="#32a852" />
+                    <TouchableOpacity onPress={() => setShowUsername(!showUsername)}>
+                        <Text style={styles.headerText}>
+                            {showUsername ? 'User Name' : <MaterialIcons name="arrow-drop-down" size={24} color="#32a852" />}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* Right Half: Empty space to take up remaining space */}
+                <View style={styles.emptyColumn}></View>
+            </View>
+
+            {/* Greeting Text */}
+            <View style={styles.greetingContainer}>
+                <Text style={styles.greetingText}>Hello Devyanshi</Text>
             </View>
 
             {/* Toggle Buttons */}
@@ -65,28 +83,26 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
 
             {/* Bottom Navigation Tabs */}
-            <Grid style={styles.bottomTabs}>
-                <Row>
-                    <Col style={styles.bottomTabButton}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.tabContent}>
-                            <MaterialIcons name="home" size={24} color="#32a852" />
-                            <Text style={styles.bottomTabText}>Home</Text>
-                        </TouchableOpacity>
-                    </Col>
-                    <Col style={styles.bottomTabButton}>
-                        <TouchableOpacity onPress={() => navigation.navigate('BillLists')} style={styles.tabContent}>
-                            <MaterialIcons name="article" size={24} color="#32a852" />
-                            <Text style={styles.bottomTabText}>My Invoices</Text>
-                        </TouchableOpacity>
-                    </Col>
-                    <Col style={styles.bottomTabButton}>
-                        <TouchableOpacity onPress={() => navigation.navigate('ReimbursementScreen')} style={styles.tabContent}>
-                            <MaterialIcons name="redo" size={24} color="#32a852" />
-                            <Text style={styles.bottomTabText}>Reimbursements</Text>
-                        </TouchableOpacity>
-                    </Col>
-                </Row>
-            </Grid>
+            <View style={styles.bottomTabs}>
+                <View style={styles.bottomTabButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.tabContent}>
+                        <MaterialIcons name="home" size={24} color="#32a852" />
+                        <Text style={styles.bottomTabText}>Home</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.bottomTabButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('BillLists')} style={styles.tabContent}>
+                        <MaterialIcons name="article" size={24} color="#32a852" />
+                        <Text style={styles.bottomTabText}>My Invoices</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.bottomTabButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ReimbursementScreen')} style={styles.tabContent}>
+                        <MaterialIcons name="redo" size={24} color="#32a852" />
+                        <Text style={styles.bottomTabText}>Reimbursements</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     );
 };
@@ -99,13 +115,29 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
+        width: '100%',
+        paddingHorizontal: 10,
+    },
+    userContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
+        width: '50%', // Taking up half the screen
     },
     headerText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
+    },
+    emptyColumn: {
+        flex: 1, // Empty column to take the rest of the space
+    },
+    greetingContainer: {
+        marginBottom: 16,
+    },
+    greetingText: {
+        fontSize: 26,
+        color: 'black',
+        fontWeight: 'bold',
     },
     tabContainer: {
         flexDirection: 'row',
@@ -167,7 +199,7 @@ const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
         right: 20,
-        bottom: 80, // Adjust this value to bring it up from the bottom
+        bottom: 80, // Adjusted position
         backgroundColor: '#32A852',
         width: 60,
         height: 60,
@@ -177,6 +209,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     bottomTabs: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         borderTopWidth: 1,
         borderTopColor: '#ddd',
         padding: 10,
@@ -192,8 +226,8 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     tabContent: {
-        alignItems: 'center', // Centering the icon and text
-        justifyContent: 'center', // Centering the icon and text
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     bottomTabText: {
         fontSize: 12,

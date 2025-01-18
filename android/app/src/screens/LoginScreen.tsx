@@ -34,6 +34,10 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
     return (
         
         <View style={styles.container}>
+            {/* <View style={styles.header}>
+                <MaterialIcons name="person" size={40} color="#555" />
+                <Text style={styles.greeting}>Hello, User</Text>
+            </View> */}
             <Input
                 placeholder="Email"
                 value={email}
